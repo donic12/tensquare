@@ -1,0 +1,12 @@
+server:
+  port: 9009
+spring:
+  application:
+    name: tensquare-sms
+  rabbitmq:
+    host: 192.168.37.137
+
+accessKeyId : "LTAIREyvq07zCUyp"
+accessKeySecret : "oqggLaKE2s943fUlDumb3J45ECQ6IB"
+template_code : "SMS_145598275"
+sign_name : "IceCola"
