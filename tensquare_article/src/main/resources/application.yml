@@ -1,16 +1,14 @@
-server: 
+server:
   port: 9004
 spring:
-  profiles:
-    active: common
-  application:  
+  application:
     name: tensquare-article #指定服务名
-  datasource:  
+  datasource:
     driverClassName: com.mysql.jdbc.Driver
     url: jdbc:mysql://192.168.37.137:3306/tensquare_article?characterEncoding=UTF8
     username: root
     password: 123456
-  jpa: 
+  jpa:
     database: MySQL
     show-sql: true
   cache:
@@ -18,3 +16,5 @@ spring:
   data:
     mongodb:
       uri: 'mongodb://v:1234@192.168.37.137:27017/recruitdb'
+  redis:
+    host: 192.168.37.137

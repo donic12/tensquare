@@ -1,8 +1,6 @@
 server: 
   port: 9005
 spring:
-  profiles:
-    active: common
   application:  
     name: tensquare-gathering #指定服务名
   datasource:  
@@ -15,3 +13,5 @@ spring:
     show-sql: true
   cache:
     type: redis
+  redis:
+    host: 192.168.37.137

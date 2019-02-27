@@ -49,7 +49,6 @@ public class RedisCacheConfig {
 
     private Map<String, RedisCacheConfiguration> getRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> redisCacheConfigurationMap = new HashMap<>();
-        redisCacheConfigurationMap.put("article", this.getRedisCacheConfigurationWithTtl(30*10));
         redisCacheConfigurationMap.put("gathering", this.getRedisCacheConfigurationWithTtl(30*10));
 
         return redisCacheConfigurationMap;

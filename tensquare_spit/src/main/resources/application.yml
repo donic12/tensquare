@@ -1,10 +1,10 @@
 server: 
   port: 9006
 spring:
-  profiles:
-    active: common
   application:  
     name: tensquare-spit #指定服务名
   data:
     mongodb:
       uri: 'mongodb://v:1234@192.168.37.137:27017/spitdb'
+  redis:
+    host: 192.168.37.137

@@ -1,8 +1,6 @@
 server: 
   port: 9008
 spring:
-  profiles:
-    active: common
   application:  
     name: tensquare-user #指定服务名
   datasource:  
@@ -14,4 +12,6 @@ spring:
     database: MySQL
     show-sql: true
   rabbitmq:
+    host: 192.168.37.137
+  redis:
     host: 192.168.37.137
