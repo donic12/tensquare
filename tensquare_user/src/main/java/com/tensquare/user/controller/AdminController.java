@@ -1,8 +1,10 @@
 package com.tensquare.user.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import entity.Identity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +20,7 @@ import com.tensquare.user.service.AdminService;
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
+import util.JwtUtil;
 
 /**
  * admin控制器层
@@ -114,20 +117,30 @@ public class AdminController {
         return new Result(true, StatusCode.OK, "删除成功");
     }
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     /**
      * 用户登陆
      *
-     * @param loginname
-     * @param password
+     * @param loginMap
      * @return
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result login(@RequestBody Map<String, String> loginMap) {
-        Admin admin =
-                adminService.findByLoginnameAndPassword(loginMap.get("loginname"),
-                        loginMap.get("password"));
+        Admin admin = adminService.findByLoginnameAndPassword(loginMap.get("loginname"), loginMap.get("password"));
         if (admin != null) {
-            return new Result(true, StatusCode.OK, "登陆成功");
+            //生成Token
+            Identity identity = new Identity();
+            identity.setId(admin.getId());
+            identity.setUserName(admin.getLoginname());
+            identity.setRole("ADMIN");
+            identity.setIssuer("VX");
+            String token = jwtUtil.createToken(identity);
+            Map map = new HashMap();
+            map.put("token", token);
+            map.put("name", admin.getLoginname());//登陆名
+            return new Result(true, StatusCode.OK, "登陆成功", map);
         } else {
             return new Result(false, StatusCode.LOGINERROR, "用户名或密码错误");
         }

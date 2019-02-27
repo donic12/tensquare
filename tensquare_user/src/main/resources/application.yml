@@ -15,3 +15,8 @@ spring:
     host: 192.168.37.137
   redis:
     host: 192.168.37.137
+
+jwt:
+  config:
+    key: itcast
+    ttl: 36000 #持续时间
