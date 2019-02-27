@@ -19,4 +19,4 @@ spring:
 jwt:
   config:
     key: itcast
-    ttl: 36000 #持续时间
+    ttl: 360000 #持续时间

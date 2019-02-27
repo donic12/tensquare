@@ -7,12 +7,7 @@ import java.util.Map;
 import entity.Identity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.tensquare.user.pojo.Admin;
 import com.tensquare.user.service.AdminService;
@@ -144,6 +139,12 @@ public class AdminController {
         } else {
             return new Result(false, StatusCode.LOGINERROR, "用户名或密码错误");
         }
+    }
+
+    @GetMapping("/a")
+    public String a(String s) throws Exception {
+        Identity identity = jwtUtil.parseToken(s);
+        return identity.toString();
     }
 
 }
