@@ -165,11 +165,36 @@ public class UserController {
             Map map = new HashMap();
             map.put("token", token);
             map.put("name", user.getNickname());//登陆名
-            map.put("avatar",user.getAvatar());//头像
+            map.put("avatar", user.getAvatar());//头像
             return new Result(true, StatusCode.OK, "登陆成功", map);
         } else {
             return new Result(false, StatusCode.LOGINERROR, "用户名或密码错误");
         }
     }
 
+    /**
+     * 增加粉丝数
+     *
+     * @param userid
+     * @param x
+     */
+    @RequestMapping(value = "/incfans/{userid}/{x}", method =
+            RequestMethod.POST)
+    public void incFanscount(@PathVariable String userid, @PathVariable
+            int x) {
+        userService.incFanscount(userid, x);
+    }
+
+    /**
+     * 增加关注数
+     *
+     * @param userid
+     * @param x
+     */
+    @RequestMapping(value = "/incfollow/{userid}/{x}", method =
+            RequestMethod.POST)
+    public void incFollowcount(@PathVariable String userid, @PathVariable
+            int x) {
+        userService.incFollowcount(userid, x);
+    }
 }

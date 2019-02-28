@@ -1,5 +1,6 @@
 package com.tensquare.friend.srevice;
 
+import com.tensquare.friend.client.UserClient;
 import com.tensquare.friend.dao.FriendDao;
 import com.tensquare.friend.dao.NoFriendDao;
 import com.tensquare.friend.pojo.Friend;
@@ -17,7 +18,7 @@ public class FriendService {
     @Autowired
     private NoFriendDao noFriendDao;
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public int addFriend(String userid, String friendid) {
         //判断如果用户已经添加了这个好友，则不进行任何操作,返回0
         if (friendDao.selectCount(userid, friendid) > 0) {
@@ -34,6 +35,10 @@ public class FriendService {
             friendDao.updateLike(userid, friendid, "1");
             friendDao.updateLike(friendid, userid, "1");
         }
+        //增加自己的关注数
+        userClient.incFollowcount(userid, 1);
+        //增加对方的粉丝数
+        userClient.incFanscount(friendid, 1);
         return 1;
     }
 
@@ -52,13 +57,22 @@ public class FriendService {
 
     /**
      * 删除好友
+     *
      * @param userid
      * @param friendid
      */
-    @Transactional
-    public void deleteFriend(String userid,String friendid){
-        friendDao.deleteFriend(userid,friendid);
-        friendDao.updateLike(friendid,userid,"0");
-        addNoFriend(userid,friendid);//向不喜欢表中添加记录
+    @Transactional(rollbackOn = Exception.class)
+    public void deleteFriend(String userid, String friendid) {
+        friendDao.deleteFriend(userid, friendid);
+        friendDao.updateLike(friendid, userid, "0");
+        //向不喜欢表中添加记录
+        addNoFriend(userid, friendid);
+        //减少自己的关注数
+        userClient.incFollowcount(userid, -1);
+        //减少对方的粉丝数
+        userClient.incFanscount(friendid, -1);
     }
+
+    @Autowired
+    private UserClient userClient;
 }

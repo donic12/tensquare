@@ -9,6 +9,9 @@ import util.JwtUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author IceCola
+ */
 @Component
 public class JwtFilter extends HandlerInterceptorAdapter {
     @Autowired
