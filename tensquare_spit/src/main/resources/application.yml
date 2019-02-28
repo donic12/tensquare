@@ -8,6 +8,15 @@ spring:
       uri: 'mongodb://v:1234@192.168.37.137:27017/spitdb'
   redis:
     host: 192.168.37.137
+eureka:
+  client:
+    service-url:
+      defaultZone: 'http://localhost:6868/eureka'
+  instance:
+    prefer-ip-address: true
+
+
+
 jwt:
   config:
     key: itcast
