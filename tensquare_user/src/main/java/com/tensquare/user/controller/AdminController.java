@@ -17,6 +17,8 @@ import entity.Result;
 import entity.StatusCode;
 import util.JwtUtil;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * admin控制器层
  *
@@ -107,7 +109,11 @@ public class AdminController {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Result delete(@PathVariable String id) {
+    public Result delete(@PathVariable String id, HttpServletRequest request) {
+        Identity claims = (Identity) request.getAttribute("ADMIN_CLAIMS");
+        if (claims==null){
+            return new Result(false,StatusCode.ACCESSERROR,"无权访问");
+        }
         adminService.deleteById(id);
         return new Result(true, StatusCode.OK, "删除成功");
     }
@@ -141,10 +147,5 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/a")
-    public String a(String s) throws Exception {
-        Identity identity = jwtUtil.parseToken(s);
-        return identity.toString();
-    }
 
 }

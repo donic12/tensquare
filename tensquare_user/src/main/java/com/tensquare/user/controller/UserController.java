@@ -1,8 +1,10 @@
 package com.tensquare.user.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import entity.Identity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,9 @@ import com.tensquare.user.service.UserService;
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
+import util.JwtUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * user控制器层
@@ -104,7 +109,11 @@ public class UserController {
      * @param id
      */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public Result delete(@PathVariable String id) {
+    public Result delete(@PathVariable String id, HttpServletRequest request) {
+        Identity claims = (Identity) request.getAttribute("USER_CLAIMS");
+        if (claims == null) {
+            return new Result(false, StatusCode.ACCESSERROR, "无权访问");
+        }
         userService.deleteById(id);
         return new Result(true, StatusCode.OK, "删除成功");
     }
@@ -132,6 +141,9 @@ public class UserController {
         return new Result(true, StatusCode.OK, "注册成功");
     }
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     /**
      * 用户登陆
      *
@@ -143,7 +155,18 @@ public class UserController {
     public Result login(String mobile, String password) {
         User user = userService.findByMobileAndPassword(mobile, password);
         if (user != null) {
-            return new Result(true, StatusCode.OK, "登陆成功");
+            //生成Token
+            Identity identity = new Identity();
+            identity.setId(user.getId());
+            identity.setUserName(user.getNickname());
+            identity.setRole("USER");
+            identity.setIssuer("VX");
+            String token = jwtUtil.createToken(identity);
+            Map map = new HashMap();
+            map.put("token", token);
+            map.put("name", user.getNickname());//登陆名
+            map.put("avatar",user.getAvatar());//头像
+            return new Result(true, StatusCode.OK, "登陆成功", map);
         } else {
             return new Result(false, StatusCode.LOGINERROR, "用户名或密码错误");
         }
