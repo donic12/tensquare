@@ -2,6 +2,7 @@ package com.tensquare.spit.controller;
 
 import com.tensquare.spit.pojo.Spit;
 import com.tensquare.spit.service.SpitService;
+import entity.Identity;
 import entity.PageResult;
 import entity.Result;
 import entity.StatusCode;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @CrossOrigin
@@ -45,7 +48,12 @@ public class SpitController {
      * @param spit
      */
     @RequestMapping(method = RequestMethod.POST)
-    public Result add(@RequestBody Spit spit) {
+    public Result add(@RequestBody Spit spit, HttpServletRequest request) {
+        Identity claims = (Identity) request.getAttribute("USER_CLAIMS");
+        if (claims == null) {
+            return new Result(false, StatusCode.ACCESSERROR, "无权访问");
+        }
+        spit.setUserid(claims.getId());
         spitService.add(spit);
         return new Result(true, StatusCode.OK, "增加成功");
     }

@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import util.IdWorker;
+import util.JwtUtil;
 
 @SpringBootApplication
 @EnableCaching
@@ -20,4 +21,8 @@ public class ArticleApplication {
         return new IdWorker(1, 1);
     }
 
+    @Bean
+    public JwtUtil jwtUtil() {
+        return new util.JwtUtil();
+    }
 }

@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import util.IdWorker;
+import util.JwtUtil;
 
 @SpringBootApplication
 public class SpitApplication {
@@ -17,5 +18,9 @@ public class SpitApplication {
 	public IdWorker idWorker(){
 		return new IdWorker(1, 1);
 	}
-	
+
+	@Bean
+	public JwtUtil jwtUtil() {
+		return new util.JwtUtil();
+	}
 }
