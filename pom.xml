@@ -17,6 +17,7 @@
         <module>tensquare_sms</module>
         <module>tensquare_firend</module>
         <module>tensquare_manager</module>
+        <module>tensquare_web</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
