@@ -17,9 +17,12 @@ eureka:
       defaultZone: 'http://localhost:6868/eureka'
   instance:
     prefer-ip-address: true
-
+feign:
+  hystrix:
+    enabled: true
 
 
 jwt:
   config:
     key: itcast
+

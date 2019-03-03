@@ -13,5 +13,10 @@ import org.springframework.data.redis.repository.cdi.RedisRepositoryBean;
  * @author Administrator
  */
 public interface AdminDao extends JpaRepository<Admin, String>, JpaSpecificationExecutor<Admin> {
+    /**
+     * 根据登录名查找用户
+     * @param loginname
+     * @return
+     */
     public Admin findByLoginname(String loginname);
 }
