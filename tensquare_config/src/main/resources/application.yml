@@ -5,4 +5,8 @@ spring:
     config:
       server:
         git:
-          uri:
+          uri: https://github.com/i9xx/tensquare
+          search-paths: tensquare-config/config
+
+server:
+  port: 12000
