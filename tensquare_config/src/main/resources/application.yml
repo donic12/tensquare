@@ -7,12 +7,12 @@ spring:
         git:
           uri: https://github.com/i9xx/tensquare
           search-paths: config
-
+  rabbitmq:
+    host: 192.168.37.137
 server:
   port: 12000
 management:
-  endpoint:
   endpoints:
     web:
       exposure:
-        include: 'bus‐refresh'
+        include: bus-refresh

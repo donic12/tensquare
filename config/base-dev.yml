@@ -20,6 +20,3 @@ eureka:
       defaultZone: 'http://localhost:6868/eureka'
   instance:
     prefer-ip-address: true
-
-test:
-  a: asdasd
