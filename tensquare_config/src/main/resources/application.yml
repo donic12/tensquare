@@ -6,7 +6,7 @@ spring:
       server:
         git:
           uri: https://github.com/i9xx/tensquare
-          search-paths: tensquare-config/config
+          search-paths: config
 
 server:
   port: 12000
