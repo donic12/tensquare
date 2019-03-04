@@ -1,0 +1,20 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: tensquare-base
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.37.137:3306/tensquare_base
+    password: 123456
+    username: root
+  jpa:
+    database: mysql
+    show-sql: true
+    generate-ddl: true
+eureka:
+  client:
+    service-url:
+      defaultZone: 'http://localhost:6868/eureka'
+  instance:
+    prefer-ip-address: true
