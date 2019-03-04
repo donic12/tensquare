@@ -22,4 +22,4 @@ eureka:
     prefer-ip-address: true
 
 test:
-  a: muamuamua
+  a: mua
